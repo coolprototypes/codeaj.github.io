@@ -1,0 +1,128 @@
+li input{
+    border: none;
+    padding: 4px 8px;
+    &:focus{
+        outline: none;
+    }
+    &[disabled] {
+        background: transparent;
+    }
+}
+.sub-input{
+    position : relative;
+    display: inline-block;
+    padding : 0 1px;
+}
+.sub-input-conditional{
+    border-bottom: 1px solid #33B5E5;
+    &::before{
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        height: 30%;
+        left: 0;
+        border-left: 1px solid #33B5E5;
+    }
+    &::after{
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        height: 30%;
+        right: 0;
+        color: transparent;
+        border-left: 1px solid #33B5E5;
+    }
+}
+.subjectNote, .topicElement, .topicNote, .subtopicElement, .subtopicNote {
+    border-bottom: 1px solid gray;
+}
+div.button-area {
+    position: fixed;
+    margin: 0 auto;
+    text-align: center;
+    height: auto;
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    z-index: 20;
+    padding: 8px 0;
+}.note-container{
+    padding-top: 40px;
+}
+img{
+    height: 100px;
+    width: 100px;
+}
+i {
+    color: blue;
+    font-size: 2em;
+    line-height: 104px !important;
+    text-align: center;
+}
+.cnd-img {
+    img{
+        border-radius: 4px;
+        height: 105px;
+    }
+    text-align: center;
+}
+.row {
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+}
+.item-selected{background: aqua}
+.create-edit-form{
+    background: rgba(0,0,0,0.6);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.image-thumbnail{
+    height: 250px;
+    width: 60%;
+    display: block;
+    background: green;
+    margin: 0 auto;
+}
+textarea{
+    width: 80%;
+    height: 150px;
+}
+.form-box{
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    background: #fff;
+}
+.create-edit-form{
+    transition: all 1s;
+}
+.create-edit-form.ng-hide-remove{
+    -webkit-animation: fadeInDown 1s;
+    -moz-animation: fadeInDown 1s;
+    -ms-animation: fadeInDown 1s;
+    animation: fadeInDown 1s;
+}
+.delteArea{
+    background: #fff;
+    width : 360px;
+    margin-top: 80px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ng-enter {
+    -webkit-animation: fadeInLeft 1s;
+    -moz-animation: fadeInLeft 1s;
+    -ms-animation: fadeInLeft 1s;
+    animation: fadeInLeft 1s;
+}
+
+.ng-leave {
+    -webkit-animation: bounceOut 1s;
+    -moz-animation: bounceOut 1s;
+    -ms-animation: bounceOut 1s;
+    animation: bounceOut 1s;
+}
