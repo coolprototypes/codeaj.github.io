@@ -1,0 +1,136 @@
+<div class="delete-form" ng-show="deleteForm">
+    <div class="deleteArea">
+        <p>Are you sure you want to delete?</p>
+        <button ng-click="deleteForm = !deleteForm">Cancel</button>
+        <button ng-click="delete()">Delete</button>
+    </div>
+</div>
+<div class="please-wait">
+    <div class="please-wait-area">
+        <p>Please wait...</p>
+    </div>
+</div>
+<div class="img-container" ng-show="showImg">
+    <i class="fa fa-times-circle" ng-click="showImg = !showImg"></i>
+    <img src="{{imageSrc}}">
+</div>
+<div class="container row">
+    <div class="bread-crumb-container small-12 large-8 columns">
+        <span ng-click="moveBack(0)" class="activeLink">{{"Home"}} 
+            <i class="fa fa-chevron-right" ng-show="selectedSubject"></i></span>
+        <span ng-click="moveBack(1)" class="" ng-show="selectedSubject">
+            {{selectedSubject.length > 20 ? selectedSubject.substring(0, 20) + " ..."
+                                : selectedSubject}}
+            <i class="fa fa-chevron-right" ng-show="selectedTopic"></i>
+        </span>
+        <span ng-click="moveBack(2)" class="" ng-show="selectedTopic">
+            {{selectedTopic.length > 20 ? selectedTopic.substring(0, 20) + " ..." : selectedTopic}}
+            <i class="fa fa-chevron-right" ng-show="selectedSubtopic"></i>
+        </span>
+        <span ng-click="" class="">
+            {{selectedSubtopic.length > 20 ? selectedSubtopic.substring(0, 20) + " ..."
+                                : selectedSubtopic}}
+        </span>
+    </div>
+    <div class="small-12 large-4 columns bar-actions">
+        <span class="plus-icon">
+            <i class="fa fa-plus" ng-click="createClicked()"></i>
+            <span class="add-area" ng-show="createClick">
+                <span ng-click="addSubject()" ng-show="atHome">Subject</span>
+                <span ng-click="addNote()" ng-show="!atHome">Note</span>
+                <span ng-click="addTopic()" ng-show="showTopics">Topic</span>
+                <span ng-click="addSubtopic()" ng-show="showSubtopics">Subtopic</span>
+            </span>
+        </span>
+        <span ng-click="updateCurrent()"><i class="fa fa-pencil-square-o"></i></span>
+        <span ng-click="deleteDialog()"><i class="fa fa-trash-o"></i></span>
+        <span ng-click="moveForward()"><i class="fa fa-arrow-right"></i></span>
+    </div>
+    <div class="small-12 large-12 columns create-edit-form" ng-show="showCreateEdit">
+        <form>
+            <div class="small-12 large-8 columns editArea">
+                <textarea placeholder="{{editPlaceholder}}" ng-model="editText"></textarea>
+            </div>
+            <div class="upload-div small-12 large-4 columns" ng-show="!subjectCreate">
+                <div ng-show="dropSupported && !dataUrl" class="drop-box" 
+                     ng-file-drop="onFileSelect($files);" 
+                     ng-file-drop-available="dropSupported=true">Drop images here
+                    </br>or</br>
+                    <div class="file-input-wrapper">
+                        <button class="btn-file-input">Select Image</button>
+                        <input id="upfile" type="file" ng-file-select="onFileSelect($files)" 
+                               onclick="this.value = null" class="upload-btn" name="file">
+                    </div>
+                    <div ng-show="selectedFiles != null" class="sel-file" 
+                         ng-repeat="f in selectedFiles">
+                        <div class="progress" ng-show="progress[$index] >= 0">						
+                            <div style="width:{{progress[$index]}}%">&nbsp;</div>
+                        </div>				
+                    </div>
+                </div>
+                <img ng-show="dataUrl" ng-src="{{dataUrl}}" class="uploaded-img">
+                <div ng-show="!dropSupported">
+                    HTML5 Drop File is not supported on this browser
+                </div>
+            </div>
+            <div class="small-12 columns form-save-area">
+                <button ng-click="showCreateEdit = !showCreateEdit">Cancel</button>
+                <button ng-click="create()" ng-show="createInProgress">Create</button>
+                <button ng-click="update()" ng-show="!createInProgress">Update</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="subjects-container small-12 columns" ng-show="showSubjects">
+        <div class="subject-list">
+            <p ng-repeat="subject in subjects" ng-click="makeSelection(['subject', $index])" 
+               on-select class="select-rows">
+                {{subject.name}}
+            </p>
+        </div>
+    </div>
+    <div class="topic-container small-12 columns" ng-show="showTopics">
+        <div class="subject-notes">
+            <p ng-repeat="note in notes" ng-click="makeSelection(['note', $index])" 
+               on-select class="select-rows">
+                {{note.text}}<i class="fa fa-camera-retro img-link" ng-show="note.img_name"
+                                ng-click="showImage(note.img_name)"></i>
+            </p>
+        </div>
+        <div class="subject-topics">
+            <p ng-repeat="topicElement in topics" ng-click="makeSelection(['topic', $index])" 
+               on-select class="select-rows">
+                {{topicElement.topic.text}}
+                <i class="fa fa-camera-retro img-link" ng-show="topicElement.topic.img_name"
+                   ng-click="showImage(topicElement.topic.img_name)"></i>
+            </p>
+        </div>
+    </div>
+    <div class="subtopic-container small-12 columns" ng-show="showSubtopics">
+        <div class="topic-notes">
+            <p ng-repeat="note in topicNotes" ng-click="makeSelection(['note', $index])" 
+               on-select class="select-rows">
+                {{note.text}}<i class="fa fa-camera-retro img-link" ng-show="note.img_name"
+                                ng-click="showImage(note.img_name)"></i>
+            </p>
+        </div>
+        <div class="subject-topics">
+            <p ng-repeat="subtopicElement in subtopics" 
+               ng-click="makeSelection(['subtopic', $index])" 
+               on-select class="select-rows">
+                {{subtopicElement.subtopic.text}}
+                <i class="fa fa-camera-retro img-link" ng-show="subtopicElement.subtopic.img_name"
+                   ng-click="showImage(subtopicElement.subtopic.img_name)"></i>
+            </p>
+        </div>
+    </div>
+    <div class="note-container small-12 columns" ng-show="showNotes">
+        <div class="subtopic-notes">
+            <p ng-repeat="note in subtopicNotes" ng-click="makeSelection(['note', $index])" 
+               on-select class="select-rows">
+                {{note.text}}<i class="fa fa-camera-retro img-link" ng-show="note.img_name"
+                                ng-click="showImage(note.img_name)"></i>
+            </p>
+        </div>
+    </div>
+</div>
